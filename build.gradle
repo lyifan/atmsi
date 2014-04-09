@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+defaultTasks 'build', 'deploy'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'https://repository.jboss.org/nexus/content/groups/public-jboss/'
+    }
+
+}
+
+dependencies {
+    compile 'org.springframework:spring-context:4.0.3.RELEASE'
+    compile 'org.springframework:spring-web:4.0.3.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.0.3.RELEASE'
+    
+    compile 'org.hibernate:hibernate-core:4.3.4.Final'
+
+	compile 'log4j:log4j:1.2.14'
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+
+    runtime 'javax.servlet:jstl:1.2'
+}
+
+war {
+
+}
+
+task deploy << {
+     println "Deploying to $System.env.CATALINA_HOME/webapps/"
+     copy {
+          from "${libsDir.getPath()}"
+          into "$System.env.CATALINA_HOME/webapps/"
+          include '*.war'
+    }
+}
+

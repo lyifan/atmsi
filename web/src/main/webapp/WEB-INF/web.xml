@@ -21,7 +21,7 @@
         specified for component-scanning -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>yifan.home.atmsi.config.AppConfig</param-value>
+		<param-value>yifan.home.atmsi.web.config.AppConfig</param-value>
 	</context-param>
 	
 	<servlet>
@@ -37,7 +37,7 @@
             and fully-qualified @Configuration classes -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>yifan.home.atmsi.config.AppConfig</param-value>
+            <param-value>yifan.home.atmsi.web.config.AppConfig</param-value>
         </init-param>		
 		<load-on-startup>1</load-on-startup>
 	</servlet>

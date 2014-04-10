@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin:'application'
+
+mainClassName = 'yifan.home.App'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework:spring-context:4.0.3.RELEASE'
+    compile 'org.springframework:spring-orm:4.0.3.RELEASE'    
+ 
+    compile 'org.apache.commons:commons-dbcp2:2.0'
+    compile 'org.hibernate:hibernate-core:4.3.4.Final'    
+    
+	runtime 'org.aspectj:aspectjweaver:1.7.4'
+    runtime 'mysql:mysql-connector-java:5.1.29'
+    compile 'log4j:log4j:1.2.14'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'yifan.home.atmsi.persist.App',
+            'Class-Path': configurations.runtime.collect { it.getName() }.join(' ')
+        )
+    }
+}
+
+task deploy << {
+     println 'Copying spring.jar...'
+     copy {
+          from 'build/libs'
+          into './lib'
+          include '*.jar'
+     }
+}

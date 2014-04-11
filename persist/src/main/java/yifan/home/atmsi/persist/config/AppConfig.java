@@ -3,32 +3,43 @@ package yifan.home.atmsi.persist.config;
 import java.util.Properties;
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
+
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-
-import org.apache.commons.dbcp2.BasicDataSource;
-
-import org.apache.log4j.Logger;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@Lazy
 @ComponentScan(basePackages={"yifan.home.atmsi.persist"})
+@EnableTransactionManagement
 @PropertySource("classpath:config/hibernate.properties")
 @PropertySource(value = "file:${ATMSI_CONF_DIR}/override-hibernate.properties", ignoreResourceNotFound = true)
 public class AppConfig {
 	
-	@Bean(name="log4jLogger")
+	@Autowired
+	@Qualifier("persistLogger")
+	private Logger _logger;
+	
+	@Bean(name="persistLogger")
 	public Logger buildLogger() {
 		return Logger.getLogger("home.atmsi.persist");
 	}
 	
+	// Register DataSource bean
 	@Bean(name="dataSource", destroyMethod="close")
 	@Autowired
     public DataSource buildDataSource(Environment env) {
@@ -40,9 +51,13 @@ public class AppConfig {
         return dataSource;
     }
     
+    // Register Hibernate SessionFactory bean
     @Bean(name="hibernateSessionFactory")
 	@Autowired
     public FactoryBean<SessionFactory> buildHibernateSessionFactoryBean(DataSource dataSource, Environment env) {
+    
+   		_logger.info("building Hibernate SessionFactory...");
+    
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 
 		factoryBean.setDataSource(dataSource);
@@ -58,5 +73,25 @@ public class AppConfig {
 
 		return factoryBean;
     }
-    	
+ 
+ 	// Register HibernateTransactionManager bean
+ 	@Bean
+ 	@Autowired
+ 	public PlatformTransactionManager buildHibernateTransactionManager(@Qualifier("hibernateSessionFactory")FactoryBean<SessionFactory> sessionFactoryBean) {
+		HibernateTransactionManager txMgr = new HibernateTransactionManager();
+		try {
+			SessionFactory hibernateSessionFactory = sessionFactoryBean.getObject();
+			if(hibernateSessionFactory == null) {
+				throw new Exception("hibernateSessionFactory bean is null.");
+			}
+			txMgr.setSessionFactory(hibernateSessionFactory);
+		}catch(Exception ex) {
+			_logger.error("Failed to build HibernateTransactionManager", ex);
+		}
+		
+		_logger.info("HibernateTransactionManager built successfully");
+		
+		return txMgr;
+ 	}
+ 	
 }

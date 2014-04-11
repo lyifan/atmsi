@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.apache.log4j.Logger;
 
@@ -19,15 +20,15 @@ public class PlannedJobServiceImpl implements PlannedJobService {
 	@Autowired
 	private PlannedJobDao _plannedJobDao;
 
-	@Autowired
-	@Qualifier("logger")
 	private Logger _logger;
 
-	public PlannedJobServiceImpl() {
-		System.out.println("Creating PlannedJobService: " + this);
+	@Autowired
+	public PlannedJobServiceImpl(Logger logger) {
+		_logger = logger;
+		_logger.debug(String.format("(%s)Creating PlannedJobService: ", _logger));
 	}
 	
-//	@Transactional
+	@Transactional
 	public void save(String jobRef) {
 
 		// need a PlannedJobBuilder to build a job

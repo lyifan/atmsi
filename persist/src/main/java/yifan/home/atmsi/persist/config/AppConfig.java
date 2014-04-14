@@ -29,11 +29,12 @@ import org.springframework.transaction.PlatformTransactionManager;
 @PropertySource("classpath:config/hibernate.properties")
 @PropertySource(value = "file:${ATMSI_CONF_DIR}/override-hibernate.properties", ignoreResourceNotFound = true)
 public class AppConfig {
-	
+
+/*	
 	@Autowired
 	@Qualifier("persistLogger")
 	private Logger _logger;
-	
+*/	
 	@Bean(name="persistLogger")
 	public Logger buildLogger() {
 		return Logger.getLogger("home.atmsi.persist");
@@ -54,9 +55,9 @@ public class AppConfig {
     // Register Hibernate SessionFactory bean
     @Bean(name="hibernateSessionFactory")
 	@Autowired
-    public FactoryBean<SessionFactory> buildHibernateSessionFactoryBean(DataSource dataSource, Environment env) {
+    public FactoryBean<SessionFactory> buildHibernateSessionFactoryBean(DataSource dataSource, Environment env, @Qualifier("persistLogger")Logger logger) {
     
-   		_logger.info("building Hibernate SessionFactory...");
+   		logger.info("building Hibernate SessionFactory...");
     
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 
@@ -77,7 +78,7 @@ public class AppConfig {
  	// Register HibernateTransactionManager bean
  	@Bean
  	@Autowired
- 	public PlatformTransactionManager buildHibernateTransactionManager(@Qualifier("hibernateSessionFactory")FactoryBean<SessionFactory> sessionFactoryBean) {
+ 	public PlatformTransactionManager buildHibernateTransactionManager(@Qualifier("hibernateSessionFactory")FactoryBean<SessionFactory> sessionFactoryBean, @Qualifier("persistLogger")Logger logger) {
 		HibernateTransactionManager txMgr = new HibernateTransactionManager();
 		try {
 			SessionFactory hibernateSessionFactory = sessionFactoryBean.getObject();
@@ -86,10 +87,10 @@ public class AppConfig {
 			}
 			txMgr.setSessionFactory(hibernateSessionFactory);
 		}catch(Exception ex) {
-			_logger.error("Failed to build HibernateTransactionManager", ex);
+			logger.error("Failed to build HibernateTransactionManager", ex);
 		}
 		
-		_logger.info("HibernateTransactionManager built successfully");
+		logger.info("HibernateTransactionManager built successfully");
 		
 		return txMgr;
  	}

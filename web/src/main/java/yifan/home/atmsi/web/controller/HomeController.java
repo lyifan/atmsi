@@ -29,6 +29,7 @@ public class HomeController {
 		_logger.debug(String.format("(%s)calling web home", _logger));
 	
 		model.addAttribute("who", _plannedJobService);
+		model.addAttribute("title", "Home");
 		
 		return "home";
 	}

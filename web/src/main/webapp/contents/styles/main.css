@@ -1,0 +1,19 @@
+/*
+*
+* main style 
+*
+*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin-left: 10%;
+	width: 80%;
+	border: 1px solid black;
+}
+
+div#footer {
+	width: 100%;
+}

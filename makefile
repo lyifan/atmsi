@@ -1,6 +1,8 @@
 proj=atmsi
 
 all: stopTomcat build cleanTomcat deploy startTomcat
+
+redeploy: stopTomcat doSleep cleanTomcat deploy startTomcat
 	
 stopTomcat:
 	${CATALINA_HOME}/bin/shutdown.sh
@@ -16,3 +18,6 @@ deploy:
 
 startTomcat:
 	${CATALINA_HOME}/bin/startup.sh
+	
+doSleep:
+	sleep 5

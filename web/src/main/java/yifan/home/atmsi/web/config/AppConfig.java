@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 import org.apache.log4j.Logger;
 
@@ -35,6 +36,7 @@ public class AppConfig {
 	public ViewResolver buildViewResolver(@Qualifier("webLogger") Logger logger) {
 		logger.debug(String.format("(%s)building ViewResolver.......", logger));
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/view/");
 		resolver.setSuffix(".jsp");
 		return resolver;

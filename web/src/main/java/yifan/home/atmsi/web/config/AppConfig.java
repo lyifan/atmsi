@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.ViewResolver;
@@ -21,7 +23,7 @@ import org.apache.log4j.Logger;
 @EnableWebMvc
 @PropertySource(value = "/WEB-INF/config/webapp.properties", ignoreResourceNotFound = true)
 @PropertySource(value = "file:${ATMSI_CONF_DIR}/override-webapp.properties", ignoreResourceNotFound = true)
-public class AppConfig {
+public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private Environment _env;
@@ -41,4 +43,9 @@ public class AppConfig {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
+	
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/contents/**").addResourceLocations("/contents/");
+    }	
 }

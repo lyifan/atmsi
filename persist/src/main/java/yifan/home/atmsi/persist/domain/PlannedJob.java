@@ -32,7 +32,7 @@ public class PlannedJob implements java.io.Serializable {
         _id = id;
     }
 
-	@Column(name="JobReference")
+	@Column(name="JobReference", unique=true)
     public String getReference() {
         return _ref;
     }

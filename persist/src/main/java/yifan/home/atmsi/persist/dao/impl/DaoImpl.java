@@ -20,7 +20,7 @@ public abstract class DaoImpl<T extends AtmsiEntity> implements Dao<T> {
 
 	private final String _tableName;
 
-	public DaoImpl(Class<?> domainClass) {
+	public DaoImpl(Class<T> domainClass) {
 		_tableName = domainClass.getName();
 	}
 

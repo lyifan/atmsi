@@ -35,7 +35,7 @@ public class PlannedVisit extends AtmsiEntity {
     public Place getPlace() {
         return _place;
     }
-    public void setPlaceId(Place place) {
+    public void setPlace(Place place) {
         _place = place;
     }
 
@@ -64,8 +64,8 @@ public class PlannedVisit extends AtmsiEntity {
         _end = end;
     }
 
-	@Column(name = "NextVisit", nullable = true)
-	@JoinColumn(name = "PlannedVisitID", nullable = true)
+	@OneToOne
+	@JoinColumn(name = "NextVisit", nullable = true)
 	public PlannedVisit getNextVisit() {
 		return _nextVisit;
 	}

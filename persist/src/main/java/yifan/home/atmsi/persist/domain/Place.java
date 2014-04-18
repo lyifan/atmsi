@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  *
 */
 @Entity
-public class Place implements java.io.Serializable {
+public class Place extends AtmsiEntity {
 	private int _id;
 	private String _name;
 

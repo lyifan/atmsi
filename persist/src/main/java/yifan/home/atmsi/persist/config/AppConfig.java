@@ -74,8 +74,8 @@ public class AppConfig {
 
 		return factoryBean;
     }
- 
- 	// Register HibernateTransactionManager bean
+    
+   	// Register HibernateTransactionManager bean
  	@Bean
  	@Autowired
  	public PlatformTransactionManager buildHibernateTransactionManager(@Qualifier("hibernateSessionFactory")FactoryBean<SessionFactory> sessionFactoryBean, @Qualifier("persistLogger")Logger logger) {
@@ -94,5 +94,4 @@ public class AppConfig {
 		
 		return txMgr;
  	}
- 	
 }

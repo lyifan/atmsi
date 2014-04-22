@@ -15,7 +15,7 @@
 		require(['jquery', 'angular'], function(jq, ng) {
 		});
 		// -->
-		</script>		
+		</script>
 		<title><%=request.getParameter("title")%></title>
 	</head>
 	<body>

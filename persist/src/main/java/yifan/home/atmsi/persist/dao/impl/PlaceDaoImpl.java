@@ -7,15 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import yifan.home.atmsi.persist.domain.PlannedJob;
-import yifan.home.atmsi.persist.dao.PlannedJobDao;
+import yifan.home.atmsi.persist.domain.Place;
+import yifan.home.atmsi.persist.dao.PlaceDao;
 
-@Component("plannedJobDao")
-public class PlannedJobDaoImpl 
-		extends DaoImpl<PlannedJob> 
-		implements PlannedJobDao  {	
+@Component("placeDao")
+public class PlaceDaoImpl 
+		extends DaoImpl<Place> 
+		implements PlaceDao {
 
-	public PlannedJobDaoImpl() {
-		super(PlannedJob.class);
+	public PlaceDaoImpl() {
+		super(Place.class);
 	}
+	
 }

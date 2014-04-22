@@ -12,11 +12,13 @@ import static javax.persistence.GenerationType.IDENTITY;
  *
 */
 @Entity
-public class PlannedVisit implements java.io.Serializable {
+public class PlannedVisit extends AtmsiEntity {
 
-    private int _id;
-    private Date _start, _end;
-    private PlannedJob _plannedJob;
+    private int 			_id;
+    private Date 			_start, _end;
+    private PlannedJob 		_plannedJob;
+    private Place 			_place;
+    private PlannedVisit	_nextVisit;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -26,6 +28,15 @@ public class PlannedVisit implements java.io.Serializable {
     }
     public void setId(int id) {
         _id = id;
+    }
+
+	@OneToOne
+	@JoinColumn(name = "PlaceID", nullable = false)
+    public Place getPlace() {
+        return _place;
+    }
+    public void setPlace(Place place) {
+        _place = place;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,4 +64,12 @@ public class PlannedVisit implements java.io.Serializable {
         _end = end;
     }
 
+	@OneToOne
+	@JoinColumn(name = "NextVisit", nullable = true)
+	public PlannedVisit getNextVisit() {
+		return _nextVisit;
+	}
+	public void setNextVisit(PlannedVisit nextVisit) {
+		_nextVisit = nextVisit;
+	}
 }

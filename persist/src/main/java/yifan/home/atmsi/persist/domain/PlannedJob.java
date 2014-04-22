@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cascade;
  *
 */
 @Entity
-public class PlannedJob implements java.io.Serializable {
+public class PlannedJob extends AtmsiEntity {
     private int _id;
     private String _ref;
     private Date _start, _end;

@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  *
 */
 @Entity
-public class Resource implements java.io.Serializable {
+public class Resource extends AtmsiEntity {
 	private int _id;
 	private String _type;
 	private String _name;

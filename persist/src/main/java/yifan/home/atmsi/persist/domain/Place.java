@@ -4,6 +4,9 @@ import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  *
  * The Place domain class
@@ -11,6 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  *
 */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Place extends AtmsiEntity {
 	private int _id;
 	private String _name;

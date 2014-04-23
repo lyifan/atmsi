@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 	<head>
 		<link rel='stylesheet' href='contents/styles/main.css' type='text/css'></link>
@@ -13,6 +14,7 @@
 		});
 		
 		require(['jquery', 'angular'], function(jq, ng) {
+			angular.module('AtmsiApp', []);
 		});
 		// -->
 		</script>
@@ -21,4 +23,4 @@
 	<body>
 		<div id='banner'>
 		</div>
-		<div id='content'>
+		<div id='content' ng-app='AtmsiApp'>

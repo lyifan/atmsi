@@ -1,4 +1,4 @@
-package yifan.home.atmsi.persist.bo;
+package yifan.home.atmsi.web.service;
 
 public interface PlannedJobService {
 

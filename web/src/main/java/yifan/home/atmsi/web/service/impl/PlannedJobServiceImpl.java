@@ -1,4 +1,4 @@
-package yifan.home.atmsi.persist.bo.impl;
+package yifan.home.atmsi.web.service.impl;
 
 import java.util.Set;
 import java.util.Calendar;
@@ -8,25 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.apache.log4j.Logger;
-
-import yifan.home.atmsi.persist.dao.*;
+import yifan.home.atmsi.persist.dao.PlannedJobDao;
 import yifan.home.atmsi.persist.domain.*;
-import yifan.home.atmsi.persist.bo.PlannedJobService;
+
+import yifan.home.atmsi.web.service.PlannedJobService;
 
 @Service("plannedJobService")
-public class PlannedJobServiceImpl implements PlannedJobService {
+public class PlannedJobServiceImpl extends AbstractService implements PlannedJobService {
 
 	@Autowired
 	private PlannedJobDao _plannedJobDao;
-
-	private Logger _logger;
-
-	@Autowired
-	public PlannedJobServiceImpl(Logger logger) {
-		_logger = logger;
-		_logger.debug(String.format("(%s)Creating PlannedJobService: ", _logger));
-	}
 	
 	@Transactional
 	public void save(String jobRef) {

@@ -65,17 +65,24 @@ public class AppConfig {
 		factoryBean.setPackagesToScan("yifan.home.atmsi.persist.domain");
 
 		Properties properties = new Properties();
+		
+		properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect"));
+		properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto", "update"));
+		properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql", "true"));		
 
-		properties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
-		properties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
-		properties.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
+		properties.setProperty("hibernate.cache.use_second_level_cache", env.getProperty("hibernate.cache.use_second_level_cache", "true"));
+		properties.setProperty("hibernate.cache.use_structured_entries", env.getProperty("hibernate.cache.use_structured_entries", "true"));
+		properties.setProperty("hibernate.cache.use_query_cache", env.getProperty("hibernate.cache.use_query_cache", "true"));
+		properties.setProperty("hibernate.cache.provider_class", env.getProperty("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider"));
+		properties.setProperty("hibernate.cache.region.factory_class", env.getProperty("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory"));
+		properties.setProperty("javax.persistence.sharedCache.mode", env.getProperty("javax.persistence.sharedCache.mode", "DISABLE_SELECTIVE"));	
 
 		factoryBean.setHibernateProperties(properties);
 
 		return factoryBean;
     }
- 
- 	// Register HibernateTransactionManager bean
+    
+   	// Register HibernateTransactionManager bean
  	@Bean
  	@Autowired
  	public PlatformTransactionManager buildHibernateTransactionManager(@Qualifier("hibernateSessionFactory")FactoryBean<SessionFactory> sessionFactoryBean, @Qualifier("persistLogger")Logger logger) {
@@ -94,5 +101,4 @@ public class AppConfig {
 		
 		return txMgr;
  	}
- 	
 }

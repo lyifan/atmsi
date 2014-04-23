@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import org.apache.log4j.Logger;
 
-import yifan.home.atmsi.persist.bo.*;
+import yifan.home.atmsi.persist.dao.*;
 import yifan.home.atmsi.persist.config.*;
 
 /**
@@ -19,9 +19,9 @@ public class App
     {
 		//ApplicationContext ctx = new ClassPathXmlApplicationContext("config/spring-app-context.xml");
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-		PlannedJobService plannedJobService = ctx.getBean("plannedJobService", PlannedJobService.class);
+		PlannedJobDao plannedJobDao = ctx.getBean("plannedJobDao", PlannedJobDao.class);
 		
-		plannedJobService.save(args[0]);
+		plannedJobDao.getById(1);
 
     }
 }

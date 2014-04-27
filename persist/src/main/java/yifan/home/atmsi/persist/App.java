@@ -2,12 +2,9 @@ package yifan.home.atmsi.persist;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import org.apache.log4j.Logger;
-
-import yifan.home.atmsi.persist.dao.*;
-import yifan.home.atmsi.persist.config.*;
+import yifan.home.atmsi.persist.config.AppConfig;
+import yifan.home.atmsi.persist.dao.PlannedJobDao;
 
 /**
  * Hello world!
@@ -15,7 +12,8 @@ import yifan.home.atmsi.persist.config.*;
  */
 public class App 
 {
-    public static void main( String[] args )
+    @SuppressWarnings("resource")
+	public static void main( String[] args )
     {
 		//ApplicationContext ctx = new ClassPathXmlApplicationContext("config/spring-app-context.xml");
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);

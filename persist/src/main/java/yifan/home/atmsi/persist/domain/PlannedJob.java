@@ -17,7 +17,11 @@ import org.hibernate.annotations.Cascade;
 */
 @Entity
 public class PlannedJob extends AtmsiEntity {
-    private int _id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 368590166145879297L;
+	private int _id;
     private String _ref;
     private Date _start, _end;
     private Set<PlannedVisit> _visits = new HashSet<PlannedVisit>();

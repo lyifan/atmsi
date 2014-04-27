@@ -6,14 +6,7 @@
 <h3>${title}</h3>
 
 <br/>
-<form name='frm_plannedJob'>
-	<div><p>Select a place from the following <c:out value="${places.size()}"/> places</p></div>
-	<div>
-		<select name='place'>
-			<c:forEach items="${places}" var="place">
-				<option value="${place.id}">${place.name}</option>
-			</c:forEach>
-		</select>
-	</div>
-</form>
+
+<a href='${sessionScope.context}/work'>Work</a>
+
 <jsp:include page="footer.jsp"/>

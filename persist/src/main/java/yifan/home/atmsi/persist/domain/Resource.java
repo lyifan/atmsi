@@ -12,6 +12,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 */
 @Entity
 public class Resource extends AtmsiEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8154740586378457494L;
 	private int _id;
 	private String _type;
 	private String _name;

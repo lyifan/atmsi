@@ -1,16 +1,16 @@
 package yifan.home.atmsi.web.service.impl;
 
-import java.util.Set;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import yifan.home.atmsi.persist.dao.PlannedJobDao;
-import yifan.home.atmsi.persist.domain.*;
-
+import yifan.home.atmsi.persist.domain.PlannedJob;
+import yifan.home.atmsi.persist.domain.PlannedVisit;
 import yifan.home.atmsi.web.service.PlannedJobService;
 
 @Service("plannedJobService")
@@ -51,5 +51,14 @@ public class PlannedJobServiceImpl extends AbstractService implements PlannedJob
 		_plannedJobDao.save(job);
 
 	}
-
+	
+	@Transactional
+	public List<PlannedJob> getAll() {
+		return _plannedJobDao.getAll();
+	}
+	
+	@Transactional
+	public PlannedJob getById(int id) {
+		return _plannedJobDao.getById(id);
+	}
 }

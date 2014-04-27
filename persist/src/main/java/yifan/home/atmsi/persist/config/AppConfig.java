@@ -75,7 +75,7 @@ public class AppConfig {
 		properties.setProperty("hibernate.cache.use_query_cache", env.getProperty("hibernate.cache.use_query_cache", "true"));
 		properties.setProperty("hibernate.cache.provider_class", env.getProperty("hibernate.cache.provider_class", "org.hibernate.cache.EhCacheProvider"));
 		properties.setProperty("hibernate.cache.region.factory_class", env.getProperty("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory"));
-		properties.setProperty("javax.persistence.sharedCache.mode", env.getProperty("javax.persistence.sharedCache.mode", "DISABLE_SELECTIVE"));	
+
 
 		factoryBean.setHibernateProperties(properties);
 

@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
-import yifan.home.atmsi.persist.domain.AtmsiEntity;
 import yifan.home.atmsi.persist.dao.Dao;
+import yifan.home.atmsi.persist.domain.AtmsiEntity;
 
 public abstract class DaoImpl<T extends AtmsiEntity> implements Dao<T> {
 
@@ -34,7 +32,7 @@ public abstract class DaoImpl<T extends AtmsiEntity> implements Dao<T> {
 	
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
-		return (List<T>)this.getHibernateSessionFactory().createQuery("from " + _tableName).list();
+		return (List<T>)this.getHibernateSessionFactory().createQuery("from " + _tableName).setCacheable(true).list();
 	}
 	
 	protected Session getHibernateSessionFactory() {

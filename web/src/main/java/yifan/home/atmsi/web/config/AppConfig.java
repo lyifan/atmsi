@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.google.gson.Gson;
+
 @Configuration
 @Lazy
 @ComponentScan(basePackages={"yifan.home.atmsi.web"})
@@ -44,6 +46,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		resolver.setPrefix("/WEB-INF/view/");
 		resolver.setSuffix(".jsp");
 		return resolver;
+	}
+	
+	@Bean
+	public Gson buildGson() {
+		return new Gson();
 	}
 	
 	@Override

@@ -1,9 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set var="context" value="${pageContext.request.contextPath}" scope="session"/>
 <html>
 	<head>
-		<link rel='stylesheet' href='contents/styles/main.css' type='text/css'></link>
+		<base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />	
+		<link rel='stylesheet' href='contents/styles/main.css' type='text/css'/>
 		<script type='text/javascript' src='contents/scripts/lib/require.js'></script>
-		<script type='text/javascript'>
+		<script type='text/javascript' defer='defer'>
 		// <!--
 		require.config({
 			baseUrl: 'contents/scripts/',
@@ -14,13 +17,16 @@
 		});
 		
 		require(['jquery', 'angular'], function(jq, ng) {
-			angular.module('AtmsiApp', []);
+			var app = angular.module('AtmsiApp', []);
+			if( typeof setup_angular === 'function') {
+				setup_angular(app);
+			}
 		});
 		// -->
 		</script>
 		<title><%=request.getParameter("title")%></title>
 	</head>
-	<body>
+	<body ng-app="AtmsiApp">
 		<div id='banner'>
-		</div>
-		<div id='content' ng-app='AtmsiApp'>
+		</div> <!-- banner -->
+		<div id='content'>

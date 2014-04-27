@@ -14,7 +14,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 public class PlannedVisit extends AtmsiEntity {
 
-    private int 			_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2311977171091514087L;
+	private int 			_id;
     private Date 			_start, _end;
     private PlannedJob 		_plannedJob;
     private Place 			_place;

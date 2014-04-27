@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'eclipse'
 
 defaultTasks 'build', 'deploy'
 
@@ -13,6 +14,8 @@ repositories {
 }
 
 dependencies {
+	compile project(':persist')
+
     compile 'org.springframework:spring-context:4.0.3.RELEASE'
     compile 'org.springframework:spring-web:4.0.3.RELEASE'
     compile 'org.springframework:spring-webmvc:4.0.3.RELEASE'
@@ -20,7 +23,7 @@ dependencies {
     
 	compile 'log4j:log4j:1.2.14'
 	
-	compile project(':persist')
+	compile 'com.google.code.gson:gson:2.2.4'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 

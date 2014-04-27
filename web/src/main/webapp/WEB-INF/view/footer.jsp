@@ -1,6 +1,6 @@
 	</div> <!-- content -->
 	<div id='footer'>
 	<hr/>
-	</div>
+	</div> <!-- footer -->
 	</body>
 </html>

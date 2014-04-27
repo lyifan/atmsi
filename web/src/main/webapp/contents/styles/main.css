@@ -17,3 +17,15 @@ body {
 div#footer {
 	width: 100%;
 }
+
+/* contents */
+table {
+	width: 100%;
+}
+tr th {
+	text-align: left;
+}
+
+.entity-id {
+	display: none;
+}

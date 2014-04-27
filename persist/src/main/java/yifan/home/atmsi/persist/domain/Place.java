@@ -14,8 +14,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
 */
 @Entity
+@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Place extends AtmsiEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6275390906764998092L;
 	private int _id;
 	private String _name;
 

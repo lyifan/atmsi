@@ -1,5 +1,7 @@
 package yifan.home.atmsi.web.controller;
 
+import java.util.Calendar;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,9 +43,21 @@ public class WorkController extends AbstractController {
 	
  	@RequestMapping(value = "/edit/{jobId}", method = RequestMethod.GET)
 	public String view(@PathVariable int jobId, Model model) {
+ 		PlannedJob job = new PlannedJob();
+ 		job.setReference("job 1");
+ 		job.setId(1);
+ 		Calendar c = Calendar.getInstance();
+ 		job.setStart(c.getTime());
+ 		c.add(Calendar.HOUR, 2);
+ 		job.setEnd(c.getTime());
+ 		
+ 		model.addAttribute("job", job);
+ 		
+ 		model.addAttribute("places", _placeService.getAll());
+ 		
 		return "work/view";
 	}
-	
+		
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String _new(Model model) {
 		model.addAttribute("job", new PlannedJob());

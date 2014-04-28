@@ -7,14 +7,8 @@
 
 <br/>
 <p>Detail of job: ${job.reference} </p>
-<form name='frm_plannedJob'>
-	<div><p>Select a place from the following <c:out value="${places.size()}"/> places</p></div>
-	<div>
-		<select name='place'>
-			<c:forEach items="${places}" var="place">
-				<option value="${place.id}">${place.name}</option>
-			</c:forEach>
-		</select>
-	</div>
-</form>
+<jsp:include page="job.jsp">
+	<jsp:param name="job" value="${job}" />
+	<jsp:param name="places" value="${places}" />
+</jsp:include>
 <jsp:include page="../footer.jsp"/>

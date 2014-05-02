@@ -16,23 +16,24 @@ public abstract class DaoImpl<T extends AtmsiEntity> implements Dao<T> {
 	@Qualifier("hibernateSessionFactory")
 	private SessionFactory _hibernateSessionFactory;
 
-	private final String _tableName;
+	private final Class<T> _domainClass;
 
 	public DaoImpl(Class<T> domainClass) {
-		_tableName = domainClass.getName();
+		_domainClass = domainClass;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T getById(int pkId) {
-		return null;
+		return (T) this.getHibernateSessionFactory().get(_domainClass, pkId);
 	}
 		
 	public void save(T entity) {
-		this.getHibernateSessionFactory().save(entity);
+		this.getHibernateSessionFactory().saveOrUpdate(entity);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
-		return (List<T>)this.getHibernateSessionFactory().createQuery("from " + _tableName).setCacheable(true).list();
+		return (List<T>)this.getHibernateSessionFactory().createQuery("from " + _domainClass.getName()).setCacheable(true).list();
 	}
 	
 	protected Session getHibernateSessionFactory() {

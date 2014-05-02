@@ -27,6 +27,7 @@ public class Place extends AtmsiEntity {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name="PlaceID")
+	@Override
 	public int getId() {
 		return _id;
 	}

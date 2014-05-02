@@ -3,7 +3,6 @@
 	<name>web</name>
 	<comment></comment>
 	<projects>
-		<project>persist</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -6,7 +6,7 @@ import yifan.home.atmsi.persist.domain.PlannedJob;
 
 public interface PlannedJobService {
 
-	void save(String jobRef);
+	void save(PlannedJob job);
 	
 	List<PlannedJob> getAll();
 	

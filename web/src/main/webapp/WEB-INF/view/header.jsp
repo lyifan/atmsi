@@ -17,7 +17,14 @@
 		});
 		
 		require(['jquery', 'angular'], function(jq, ng) {
-			var app = angular.module('AtmsiApp', []);
+			var app = angular.module('AtmsiApp', [])
+				.directive('atmsiBody', function() {
+					return {
+					
+					};
+				});
+
+			
 			if( typeof setup_angular === 'function') {
 				setup_angular(app);
 			}
@@ -29,4 +36,4 @@
 	<body ng-app="AtmsiApp">
 		<div id='banner'>
 		</div> <!-- banner -->
-		<div id='content'>
+		<div id='content' atmsi-body>

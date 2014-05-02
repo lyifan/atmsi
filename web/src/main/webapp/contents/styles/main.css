@@ -21,10 +21,17 @@ div#footer {
 /* contents */
 table {
 	width: 100%;
+	text-align: left;
 }
+
+table caption {
+	text-align: left;
+}
+/*
 tr th {
 	text-align: left;
 }
+*/
 
 .entity-id {
 	display: none;

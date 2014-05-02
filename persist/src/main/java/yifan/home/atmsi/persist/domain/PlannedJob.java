@@ -1,8 +1,8 @@
 package yifan.home.atmsi.persist.domain;
 
 import java.util.Date;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -24,7 +24,7 @@ public class PlannedJob extends AtmsiEntity {
 	private int _id;
     private String _ref;
     private Date _start, _end;
-    private Set<PlannedVisit> _visits = new HashSet<PlannedVisit>();
+    private List<PlannedVisit> _visits = new ArrayList<PlannedVisit>();
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -62,10 +62,10 @@ public class PlannedJob extends AtmsiEntity {
 
 	@OneToMany(mappedBy = "plannedJob")
 	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})	
-    public Set<PlannedVisit> getVisits() {
+    public List<PlannedVisit> getVisits() {
         return _visits;
     }
-    public void setVisits(Set<PlannedVisit> visits) {
+    public void setVisits(List<PlannedVisit> visits) {
         _visits = visits;
     }
 }

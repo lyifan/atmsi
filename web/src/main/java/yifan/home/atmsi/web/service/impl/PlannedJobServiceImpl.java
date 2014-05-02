@@ -1,8 +1,6 @@
 package yifan.home.atmsi.web.service.impl;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,36 +18,11 @@ public class PlannedJobServiceImpl extends AbstractService implements PlannedJob
 	private PlannedJobDao _plannedJobDao;
 	
 	@Transactional
-	public void save(String jobRef) {
-
-		// need a PlannedJobBuilder to build a job
-		PlannedJob job = new PlannedJob();
-		
-		job.setReference(jobRef);
-		Set<PlannedVisit> visits = job.getVisits();
-		
-		Calendar c = Calendar.getInstance();	
-		job.setStart(c.getTime());
-		
-		for(int i = 0; i < 3; ++i) {
-			
-			PlannedVisit visit = new PlannedVisit();
-			visit.setPlannedJob(job);
-			
-			visit.setStart(c.getTime());
-			c.add(Calendar.MINUTE, 5); // stay 5 min
-			visit.setEnd(c.getTime());
-			c.add(Calendar.MINUTE, 30); // 30 min on the road
-			
-			visits.add(visit);
+	public void save(PlannedJob job) {
+		for(PlannedVisit pv : job.getVisits()) {
+			pv.setPlannedJob(job);
 		}
-		
-		_logger.debug(String.format("Got %d visits.", visits.size()));
-		
-		job.setEnd(c.getTime());
-		
 		_plannedJobDao.save(job);
-
 	}
 	
 	@Transactional
@@ -59,6 +32,13 @@ public class PlannedJobServiceImpl extends AbstractService implements PlannedJob
 	
 	@Transactional
 	public PlannedJob getById(int id) {
-		return _plannedJobDao.getById(id);
+		PlannedJob job = _plannedJobDao.getById(id);
+		
+		// Load the lazy list
+		List<PlannedVisit> visits = job.getVisits();
+		
+		visits.removeIf((v) -> v.getId() == -1);
+				
+		return job;
 	}
 }

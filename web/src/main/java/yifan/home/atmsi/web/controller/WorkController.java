@@ -1,10 +1,9 @@
 package yifan.home.atmsi.web.controller;
 
 import java.util.Calendar;
+import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import yifan.home.atmsi.persist.domain.Place;
 import yifan.home.atmsi.persist.domain.PlannedJob;
+import yifan.home.atmsi.persist.domain.PlannedVisit;
 import yifan.home.atmsi.web.service.PlaceService;
 import yifan.home.atmsi.web.service.PlannedJobService;
 
@@ -20,10 +21,6 @@ import yifan.home.atmsi.web.service.PlannedJobService;
 @RequestMapping(value = {"/work"})
 public class WorkController extends AbstractController {
 
-	@Autowired
-	@Qualifier("webLogger")
-	private Logger _logger;
-	
 	@Autowired
 	private PlannedJobService _plannedJobService;
 	
@@ -35,7 +32,7 @@ public class WorkController extends AbstractController {
 	
 		_logger.debug("calling work index");
 		
-		this.addToModel(model, "jobs", _plannedJobService.getAll());
+		model.addAttribute("jobs", _plannedJobService.getAll());
 		this.addToModel(model, "title", "Jobs");
 		
 		return "work/index";
@@ -43,15 +40,15 @@ public class WorkController extends AbstractController {
 	
  	@RequestMapping(value = "/edit/{jobId}", method = RequestMethod.GET)
 	public String view(@PathVariable int jobId, Model model) {
- 		PlannedJob job = new PlannedJob();
- 		job.setReference("job 1");
- 		job.setId(1);
- 		Calendar c = Calendar.getInstance();
- 		job.setStart(c.getTime());
- 		c.add(Calendar.HOUR, 2);
- 		job.setEnd(c.getTime());
  		
- 		model.addAttribute("job", job);
+ 		PlannedJob job = _plannedJobService.getById(jobId);
+ 		
+ 		if( job != null) {	
+	
+	 		model.addAttribute("title", String.format("Details of job: %s", job.getReference()));
+	 		
+	 		model.addAttribute("job", job);
+ 		}
  		
  		model.addAttribute("places", _placeService.getAll());
  		
@@ -60,12 +57,16 @@ public class WorkController extends AbstractController {
 		
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String _new(Model model) {
+		model.addAttribute("title", "Create a new job");
 		model.addAttribute("job", new PlannedJob());
-		return "work/view";
+		model.addAttribute("places", _placeService.getAll());
+		return "work/new";
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute PlannedJob job, Model model) {
-		return "work/index";
+		_plannedJobService.save(job);
+		return String.format("redirect:/work/edit/%s", job.getId());
 	}
+	
 }
